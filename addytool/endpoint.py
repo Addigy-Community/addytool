@@ -687,8 +687,7 @@ class PoliciesDetails(Endpoint):
 class PoliciesDevices(Endpoint):
     def __init__(self):
         'Request api/alerts endpoint with GET method'
-        self.endpoint_url = "api/policies/devices"
-        super(PoliciesDevices,self).__init__()
+        Endpoint.__init__(self, endpoint_url = "api/policies/devices")
 
     def get(self, policy_id):
         """List devices in policy
@@ -698,9 +697,12 @@ class PoliciesDevices(Endpoint):
         Returns:
             Python list of libraries containing device facts.
         """
-        self.params['policy_id'] = policy_id
 
-        return super(PoliciesDevices,self).get()
+        params = {
+            'policy_id': policy_id,
+            }
+
+        return Endpoint.get(self, params = params)
 
     def post(self, policy_id, agent_id):
         """Add device to a policy. If device already in a policy the policy will be overridden.
@@ -711,11 +713,19 @@ class PoliciesDevices(Endpoint):
         Returns:
             Empty string.
         """
-        self.data = {
+        data = {
             'policy_id': policy_id,
             'agent_id': agent_id,
             }
-        return super(PoliciesDevices,self).post()
+        return Endpoint.post(self, data = data)
+
+    def put(self):
+        '`PoliciesDevices` endpoint does not support the PUT method.'
+        return None
+
+    def delete(self):
+        '`PoliciesDevices` endpoint does not support the DELETE method.'
+        return None
 
 class PoliciesInstructions(Endpoint):
     def __init__(self):
