@@ -157,7 +157,7 @@ class Applications(Endpoint):
 
     def __init__(self):
         'Proxies Endpoint.__init__ and initializes unique variables.'
-        Endpoint.__init__(self, endpoint_url="api/alerts")
+        Endpoint.__init__(self, endpoint_url="api/applications")
 
     def get(self):
         """Get map of installed applications per device.
