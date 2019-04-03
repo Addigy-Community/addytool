@@ -428,7 +428,40 @@ class Devices(Endpoint):
         return None
 
 class DevicesCommands(Endpoint):
-    ''
+    def __init__(self):
+        'Request api/devices/commands endpoint with POST method'
+        Endpoint.__init__(self, endpoint_url = "api/devices/commands")
+
+    def post(self, agents_ids, command):
+        """Run command on devices.
+
+        Args:
+            agents_ids (list of str): List of agent ids to send the commands to.
+            command (str): The command to be sent to the devices.
+        Returns:
+            actionids (list of obj)
+                agentid (str):
+                actionid (str):
+            jobid (str):
+            _id (str):
+        """
+        __json_data = {
+            'agents_ids': agents_ids,
+            'command': command
+            }
+        return Endpoint.post(self, json_data = __json_data)
+
+    def get(self):
+        '`DevicesCommands` endpoint does not support the GET method.'
+        return None
+
+    def put(self):
+        '`DevicesCommands` endpoint does not support the PUT method.'
+        return None
+
+    def delete(self):
+        '`DevicesCommands` endpoint does not support the DELETE method.'
+        return None
 
 class DevicesOnline(Endpoint):
     'Request api/devices/online endpoint with GET method'
@@ -462,7 +495,39 @@ class DevicesOnline(Endpoint):
         return None
 
 class DevicesOutput(Endpoint):
-    ''
+    def __init__(self):
+        'Request api/devices/output endpoint with GET method'
+        Endpoint.__init__(self, endpoint_url = "api/devices/output")
+
+    def get(self, actionid, agentid):
+        """Get output of a command.
+
+        Args:
+            actionid (str): The Action ID of the command that was sent.
+            agentid (str): The Agent ID of the device that the command was run on.
+        Returns:
+            stderr (str):
+            stdout (str):
+            exitstatus (int):
+        """
+        params = {
+            'actionid': actionid,
+            'agentid': agentid
+            }
+
+        return Endpoint.get(self, params = params)
+
+    def post(self):
+        '`DevicesOutput` endpoint does not support the POST method.'
+        return None
+
+    def put(self):
+        '`DevicesOutput` endpoint does not support the PUT method.'
+        return None
+
+    def delete(self):
+        '`DevicesOutput` endpoint does not support the DELETE method.'
+        return None
 
 class FileUpload(object):
     'Request https://file-manager-prod.addigy.com/api/upload/url endpoint \
